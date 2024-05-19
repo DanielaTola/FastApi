@@ -29,12 +29,9 @@ def create_user(user: User, db: Session = Depends(get_db)):
     new_user = {"name": user.name, "email": user.email}
     new_user["password"] = f.encrypt(user.password.encode("utf-8"))
     try:
-        # Ejecutar la inserción y confirmar la transacción
         result = db.execute(users.insert().values(new_user))
         db.commit()
-        # Obtener el ID del nuevo usuario
         new_user_id = result.lastrowid
-        # Consultar y retornar el nuevo usuario
         created_user = db.execute(users.select().where(users.c.id == new_user_id)).first()
         return dict(created_user._mapping)
     except Exception as e:
