@@ -10,7 +10,6 @@ f = Fernet(key)
 
 user = APIRouter()
 
-# Dependencia para obtener la sesión de la base de datos
 def get_db():
     db = SessionLocal()
     try:
